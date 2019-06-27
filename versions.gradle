@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2018 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 /** [ADMIN] RUN update_version.sh AFTER CHANGING THIS FILE **/
 
@@ -24,22 +9,22 @@
  **/
 ext.deps = [:]
 
+//compileSdkVersion build_versions.compile_sdk
 def build_versions = [:]
-build_versions.min_sdk                    = 21
-build_versions.target_sdk                 = 28
-build_versions.target_sdk_22              = 22
-build_versions.compile_sdk                = 28        //compileSdkVersion >= 所用支持库的版本 support
-build_versions.build_tools                = "28.0.3"
-build_versions.version_code               = 1
-build_versions.version_name               = "1.0"
+    build_versions.min_sdk                    = 21
+    build_versions.target_sdk                 = 28
+    build_versions.target_sdk_22              = 22
+    build_versions.compile_sdk                = 28        //compileSdkVersion >= 所用支持库的版本 support
+    build_versions.build_tools                = "28.0.3"
+    build_versions.version_code               = 1
+    build_versions.version_name               = "1.0"
 ext.build_versions = build_versions
 
 def versions = [:]
 //test
 versions.junit                            = "4.12"
-versions.espresso                         = "3.0.2"
-versions.atsl_runner = "1.0.2"
-versions.atsl_rules = "1.0.2"
+versions.espresso                         = "3.3.0-alpha01"
+versions.atsl_runner = "1.3.0-alpha01"
 
 //https://site.mockito.org/
 //https://github.com/mockito/mockito
@@ -50,7 +35,8 @@ versions.hamcrest = "1.3"
 
 //support
 //https://developer.android.com/topic/libraries/support-library/revisions?hl=zh-cn
-versions.support                          = "28.0.0"
+versions.support                          = "1.0.0"
+versions.support1                         = "1.1.0"
 versions.constraint_layout                = "1.1.3"
 
 /*
@@ -102,9 +88,9 @@ versions.mockwebserver                    = "3.8.1"
 versions.retrofit                         = "2.2.0"
 
 //https://developer.android.com/topic/libraries/architecture/adding-components
-versions.arch_core                        = "1.1.0"
-versions.lifecycle                        = "1.1.0"
-versions.room                             = "1.1.0"
+versions.arch_core                        = "2.1.0-beta01"
+versions.lifecycle                        = "2.2.0-alpha01"
+versions.room                             = "2.1.0"
 versions.paging                           = "2.1.0"
 
 //
@@ -201,194 +187,277 @@ versions.blockcanary                     = "1.5.0"
 versions.anrwatchdog                     = "1.4.0"
 
 
+//implementation deps.support.app_compat
+//implementation deps.xxx
 def deps = [:]
 
-//https://developer.android.com/topic/libraries/support-library/features?hl=zh-cn
-// support 包说明
-//24.2.0 之前，存在一个 v4 支持库。为了提高效率，此库拆分成多个模块。出于向后兼容的考虑，
-// 如果您在 Gradle 脚本中列出了 support-v4，您的 APK 将包含所有的 v4 模块。
-// 不过，要减少 APK 大小，我们建议仅列出应用需要的特定模块
-def support = [:]
-support.v4                                = "com.android.support:support-v4:$versions.support"
-support.v4_compat                         = "com.android.support:support-compat:$versions.support"
-support.v4_core_utils                     = "com.android.support:support-core-utils:$versions.support"
-support.v4_core_ui                        = "com.android.support:support-core-ui:$versions.support"
-support.v4_media_compat                   = "com.android.support:support-media-compat:$versions.support"
-support.v4_fragment                       = "com.android.support:support-fragment:$versions.support"
+    //https://developer.android.com/topic/libraries/support-library/features?hl=zh-cn
+    // Androidx support 包说明
+    //https://developer.android.com/jetpack/androidx/releases
+    //https://developer.android.com/reference/kotlin/androidx/packages
+    def support = [:]
 
-//v7此库依赖于 v4 支持库
-support.app_compat                        = "com.android.support:appcompat-v7:$versions.support"
-support.cardview                          = "com.android.support:cardview-v7:$versions.support"
-support.gridlayout                        = "com.android.support:gridlayout-v7:$versions.support"
-support.mediarouter                       = "com.android.support:mediarouter-v7:$versions.support"
-support.palette                           = "com.android.support:palette-v7:$versions.support"
-support.recyclerview                      = "com.android.support:recyclerview-v7:$versions.support"
-support.preference_v7                     = "com.android.support:preference-v7:$versions.support"
+        support.v4                                = "androidx.legacy:legacy-support-v4:$versions.support"
+        support.v4_compat                         = "androidx.core:core:1.2.0-alpha02"
+        support.v4_core_ui                        = "androidx.legacy:legacy-support-core-ui:$versions.support"
+        support.v4_core_utils                     = "androidx.legacy:legacy-support-core-utils:$versions.support"
+        support.v4_media_compat                   = "androidx.media:media:1.1.0-rc01"
+        support.v4_fragment                       = "androidx.fragment:fragment:1.1.0-beta01"
 
-//百分比
-support.preference                        = "com.android.support:percent:$versions.support"
+        support.v7_compat                         = "androidx.appcompat:appcompat:1.1.0-beta01"
+        support.recyclerview_selection            = "androidx.recyclerview:recyclerview-selection:1.1.0-alpha06"
+        support.recyclerview                      = "androidx.recyclerview:recyclerview:1.1.0-alpha06"
+        support.cardview_v7                       = "androidx.cardview:cardview:$versions.support"
+        support.gridlayout                        = "androidx.gridlayout:gridlayout:$versions.support"
+        support.palette                           = "androidx.palette:palette:$versions.support"
+        support.viewpager                         = "androidx.viewpager:viewpager:$versions.support"
+        support.viewpager2                        = "androidx.viewpager2:viewpager2:1.0.0-alpha05"
 
-//异步flate
-support.asynclayoutinflater               = "com.android.support:asynclayoutinflater:$versions.support"
+        //百分比
+        support.percentlayout                     = "androidx.percentlayout:percentlayout:$versions.support"
+        support.leanback_preference               = "androidx.leanback:leanback-preference:1.1.0-alpha02"
+        support.preference                        = "androidx.preference:preference:1.1.0-beta01"
+        support.legacy_preference_v14             = "androidx.legacy:legacy-preference-v14:$versions.support"
 
-//v8
+        //异步flate
+        support.asynclayoutinflater               = "androidx.asynclayoutinflater:asynclayoutinflater:$versions.support"
 
-//v13
-support.v13                               = "com.android.support:support-v13:$versions.support"
+        //设计支持库
+        support.design                            = "com.google.android.material:material:1.1.0-alpha07"
+        support.annotation                        = "androidx.annotation:annotation:1.1.0"
 
-//v14
-support.preference_v14                    = "com.android.support:preference-v14:$versions.support"
+        support.v13                               = "androidx.legacy:legacy-support-v13:$versions.support"
+        support.multidex                          = "androidx.multidex:multidex:2.0.1"
+        support.multidex_instrumentation          = "androidx.multidex:multidex-instrumentation:2.0.1"
 
-//注解支持库
-support.annotations                       = "com.android.support:support-annotations:$versions.support"
+        support.slidingpanelayout                 = "androidx.slidingpanelayout:slidingpanelayout:$versions.support"
+        support.swiperefreshlayout                = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha01"
+        support.constraint_layout                 = "androidx.constraintlayout:constraintlayout:2.0.0-beta1"
+        support.constraint_layout_solver          = "androidx.constraintlayout:constraintlayout-solver:2.0.0-beta1"
 
-//设计支持库
-support.design                            = "com.android.support:design:$versions.support"
+        support.animated_vector_drawable          = "androidx.vectordrawable:vectordrawable-animated:1.1.0-beta02"
 
-//自定义标签页
-support.customtabs                        = "com.android.support:customtabs:$versions.support"
+        support.car                               = "androidx.car:car:1.0.0-alpha5"
 
-support.forceversion                      = "$versions.support"
-support.constraint_layout                 = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
-deps.support = support
+        support.collection                        = "androidx.collection:collection:1.1.0"
+        support.coordinatorlayout                 = "androidx.coordinatorlayout:coordinatorlayout:1.1.0-beta01"
+        support.cursoradapter                     = "androidx.cursoradapter:cursoradapter:$versions.support"
+        support.browser                           = "androidx.browser:browser:$versions.support"
+        support.customview                        = "androidx.customview:customview:1.1.0-alpha01"
+        support.documentfile                      = "androidx.documentfile:documentfile:$versions.support"
+        support.drawerlayout                      = "androidx.drawerlayout:drawerlayout:1.1.0-alpha02"
+        support.exifinterface                     = "androidx.exifinterface:exifinterface:$versions.support"
+        support.heifwriter                        = "androidx.heifwriter:heifwriter:$versions.support"
+        support.interpolator                      = "androidx.interpolator:interpolator:$versions.support"
+        support.leanback                          = "androidx.leanback:leanback:$versions.support"
+        support.loader                            = "androidx.loader:loader:$versions.support"
+        support.localbroadcastmanager             = "androidx.localbroadcastmanager:localbroadcastmanager:$versions.support"
 
-deps.multidex                             = "com.android.support:multidex:$versions.multidex"
+        support.media2                            = "androidx.media2:media2:1.0.0-rc01"
+        support.media2_exoplayer                  = "androidx.media2:media2-exoplayer:1.0.0-rc01"
+        support.mediarouter                       = "androidx.mediarouter:mediarouter:1.1.0-rc01"
 
-//https://developer.android.com/topic/libraries/architecture/adding-components
-//管理您的 Activity 和 Fragment 生命周期
-def lifecycle = [:]
-lifecycle.common                          = "androidx.lifecycle:lifecycle-common:$versions.lifecycle"
-lifecycle.common_java8                    = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
-lifecycle.compiler                        = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
-lifecycle.extensions                      = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-lifecycle.livedata                        = "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle"
-lifecycle.livedata_core                   = "androidx.lifecycle:lifecycle-livedata-core:$versions.lifecycle"
-lifecycle.reactivestreams                 = "androidx.lifecycle:lifecycle-reactivestreams:$versions.lifecycle"
-lifecycle.runtime                         = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
-lifecycle.viewmodel                       = "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle"
-deps.lifecycle = lifecycle
+        support.print                             = "androidx.print:print:$versions.support"
+        support.recommendation                    = "androidx.recommendation:recommendation:$versions.support"
 
-def arch_core = [:]
-arch_core.common                          = "androidx.arch.core:core-common:$versions.arch_core"
-arch_core.core                            = "androidx.arch.core:core:$versions.arch_core"
-arch_core.runtime                         = "androidx.arch.core:core-runtime:$versions.arch_core"
-arch_core.testing                         = "androidx.arch.core:core-testing:$versions.arch_core"
-deps.arch_core = arch_core
+        support.slice_builders                    = "androidx.slice:slice-builders:$versions.support"
+        support.slice_core                        = "androidx.slice:slice-core:$versions.support"
+        support.slice_view                        = "androidx.slice:slice-view:$versions.support"
 
-//逐步从您的数据源按需加载信息
-//https://developer.android.com/jetpack/androidx/releases/paging
-def paging = [:]
-paging.common                             = "androidx.paging:paging-common:$versions.paging"
-paging.runtime                            = "android.arch.paging:runtime:$versions.paging"
-paging.rxjava2                            = "androidx.paging:paging-rxjava2:$versions.paging"
-deps.paging = paging
+        support.webkit                            = "androidx.webkit:webkit:1.1.0-alpha01"
+        support.contentpager                      = "androidx.contentpager:contentpager:$versions.support"
+        support.wear                              = "androidx.wear:wear:$versions.support"
+        support.dynamicanimation                  = "androidx.dynamicanimation:dynamicanimation:$versions.support"
+        support.vectordrawable                    = "androidx.vectordrawable:vectordrawable:1.1.0-beta02"
+        support.versionedparcelable               = "androidx.versionedparcelable:versionedparcelable:$versions.support"
+        support.textclassifier                    = "androidx.textclassifier:textclassifier:$versions.support"
+        support.transition                        = "androidx.transition:transition:$versions.support"
 
-def espresso = [:]
-espresso.core                             = "com.android.support.test.espresso:espresso-core:$versions.espresso"
-espresso.contrib                          = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
-espresso.intents                          = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
-deps.espresso = espresso
+        support.emoji                             = "androidx.emoji:emoji:$versions.support"
+        support.emoji_appcompat                   = "androidx.emoji:emoji-appcompat:$versions.support"
+        support.emoji_bundled                     = "androidx.emoji:emoji-bundled:$versions.support"
 
-def atsl = [:]
-atsl.runner                               = "com.android.support.test:runner:$versions.atsl_runner"
-atsl.rules                                = "com.android.support.test:rules:$versions.atsl_runner"
-deps.atsl = atsl
+        support.tvprovider                        = "androidx.tvprovider:tvprovider:$versions.support"
 
-def mockito = [:]
-mockito.core                              = "org.mockito:mockito-core:$versions.mockito"
-mockito.all                               = "org.mockito:mockito-all:$versions.mockito_all"
-deps.mockito = mockito
+    deps.support = support
 
-def rx = [:]
-rx.rxjava2                                = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
-rx.rx_android                             = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
-deps.rx = rx
 
-def retrofit = [:]
-retrofit.retrofit                         = "com.squareup.retrofit2:retrofit:$versions.retrofit"
-retrofit.converter                        = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
-retrofit.rxjava                           = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
-deps.retrofit = retrofit
+    //https://developer.android.com/kotlin/ktx
+    //Android KTX 是一组 Kotlin 扩展程序，属于 Android Jetpack 系列。它优化了供 Kotlin 使用的 Jetpack 和 Android 平台 API
+    def supportktx = [:]
 
-def room = [:]
-room.runtime                              = "android.arch.persistence.room:runtime:$versions.room"
-room.compiler                             = "android.arch.persistence.room:compiler:$versions.room"
-room.rxjava2                              = "android.arch.persistence.room:rxjava2:$versions.room"
-deps.room = room
+        supportktx.core_ktx                       = "androidx.core:core-ktx:$versions.support"
+        supportktx.fragment_ktx                   = "androidx.fragment:fragment-ktx:$versions.support"
+        supportktx.palette_ktx                    = "androidx.palette:palette-ktx:$versions.support"
+        supportktx.sqlite_ktx                     = "androidx.sqlite:sqlite-ktx:2.0.0"
+        supportktx.collection_ktx                 = "androidx.collection:collection-ktx:$versions.support"
+        supportktx.lifecycle_viewmodel_ktx        = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+        supportktx.lifecycle_reactivestreams_ktx  = "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.0.0"
+        supportktx.navigation_common_ktx          = "android.arch.navigation:navigation-common-ktx:1.0.0-alpha06"
+        supportktx.navigation_fragment_ktx        = "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha06"
+        supportktx.navigation_runtime_ktx         = "android.arch.navigation:navigation-runtime-ktx:1.0.0-alpha06"
+        supportktx.navigation_testing_ktx         = "android.arch.navigation:navigation-testing-ktx:1.0.0-alpha06"
+        supportktx.navigation_ui_ktx              = "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha06"
+        supportktx.work_runtime_ktx               = "android.arch.work:work-runtime-ktx:1.0.0-alpha10"
 
-def dagger = [:]
-dagger.runtime                            = "com.google.dagger:dagger:$versions.dagger"
-dagger.compiler                           = "com.google.dagger:dagger-compiler:$versions.dagger"
-dagger.plugin                             = "com.neenbedankt.gradle.plugins:android-apt:$versions.dagger_plugin"
+    deps.supportktx = supportktx
 
-dagger.android                            = "com.google.dagger:dagger-android:$versions.dagger"
-dagger.androidsupport                     = "com.google.dagger:dagger-android-support:$versions.dagger"
-dagger.androidprocessor                   = "com.google.dagger:dagger-android-processor:$versions.dagger"
-deps.dagger = dagger
+    //https://developer.android.com/topic/libraries/architecture/adding-components
+    //管理您的 Activity 和 Fragment 生命周期
+    def lifecycle = [:]
+        lifecycle.common                          = "androidx.lifecycle:lifecycle-common:$versions.lifecycle"
+        lifecycle.common_java8                    = "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
+        lifecycle.compiler                        = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+        lifecycle.extensions                      = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+        lifecycle.livedata                        = "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle"
+        lifecycle.livedata_core                   = "androidx.lifecycle:lifecycle-livedata-core:$versions.lifecycle"
+        lifecycle.reactivestreams                 = "androidx.lifecycle:lifecycle-reactivestreams:$versions.lifecycle"
+        lifecycle.runtime                         = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+        lifecycle.viewmodel                       = "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle"
+    deps.lifecycle = lifecycle
 
-//Kotlin 标准库的依赖,标准库 kotlin-stdlib 面向 Java 6 及以上版本
-//扩展版本的标准库，增加了对 JDK 7 与 JDK 8 中某些特性支持
-def kotlin = [:]
-kotlin.stdlib                             = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
-kotlin.jdk7                               = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
-kotlin.jkd8                               = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
-kotlin.test                               = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
-kotlin.plugin                             = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-deps.kotlin = kotlin
+    def arch_core = [:]
+        arch_core.common                          = "androidx.arch.core:core-common:$versions.arch_core"
+        arch_core.core                            = "androidx.arch.core:core:$versions.arch_core"
+        arch_core.runtime                         = "androidx.arch.core:core-runtime:$versions.arch_core"
+        arch_core.core_testing                    = "androidx.arch.core:core-testing:$versions.arch_core"
+    deps.arch_core = arch_core
 
-deps.logger                               = "com.orhanobut:logger:$versions.logger"
+    //逐步从您的数据源按需加载信息
+    //https://developer.android.com/jetpack/androidx/releases/paging
+    def paging = [:]
+        paging.common                             = "androidx.paging:paging-common:$versions.paging"
+        paging.runtime                            = "androidx.paging:paging-runtime:$versions.paging"
+        paging.rxjava2                            = "androidx.paging:paging-rxjava2:$versions.paging"
+    deps.paging = paging
 
-deps.fresco                               = "com.facebook.fresco:fresco:$versions.fresco"
-deps.fresco_imagepipeline_okhttp3         = "com.facebook.fresco:imagepipeline-okhttp3:$versions.fresco"
-deps.fresco_animatedgif                   = "com.facebook.fresco:animated-gif:$versions.fresco"
-deps.dexmaker                             = "com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker"
-deps.junit                                = "junit:junit:$versions.junit"
-deps.androidjunitrunner                   = "androidx.test.runner.AndroidJUnitRunner"
-deps.hamcrest                             = "org.hamcrest:hamcrest-all:$versions.hamcrest"
-deps.android_gradle_plugin                = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
-deps.gson                                 = "com.google.code.gson:gson:$versions.gson"
+    def room = [:]
+        room.common                               = "androidx.room:room-common:$versions.room"
+        room.compiler                             = "androidx.room:room-compiler:$versions.room"
+        room.guava                                = "androidx.room:room-guava:$versions.room"
+        room.migration                            = "androidx.room:room-migration:$versions.room"
+        room.runtime                              = "androidx.room:room-runtime:$versions.room"
+        room.rxjava2                              = "androidx.room:room-rxjava2:$versions.room"
+        room.testing                              = "androidx.room:room-testing:$versions.room"
+    deps.room = room
 
-//butterknife
-deps.butterknife                          = "com.jakewharton:butterknife:$versions.butterknife"
-deps.butterknife_plugin                   = "com.jakewharton:butterknife-gradle-plugin:$versions.butterknife"
-deps.butterknife_compiler                 = "com.jakewharton:butterknife-compiler:$versions.butterknife"
+    def sqlite = [:]
+        paging.db                                 = "androidx.sqlite:sqlite:2.0.1"
+        paging.db_framework                       = "androidx.sqlite:sqlite-framework:2.0.1"
+    deps.sqlite = sqlite
 
-deps.okhttp3                              = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
-deps.okhttp3_logging_interceptor          = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3_logging_interceptor"
-deps.mock_web_server                      = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
-deps.okio                                 = "com.squareup.okio:okio:$versions.okio"
-deps.fastjson                             = "com.alibaba:fastjson:$versions.fastjson"
-deps.tinker_plugin                        = "com.tencent.tinker:tinker-patch-gradle-plugin:$versions.tinker_plugin"
-deps.bugly_tinker_support                 = "com.tencent.bugly:tinker-support:$versions.bugly_tinker_support"
-deps.tinker_android_lib                   = "com.tencent.tinker:tinker-android-lib:$versions.tinker_android_lib"
-deps.andresguard_gradle_plugin            = "com.tencent.mm:AndResGuard-gradle-plugin:$versions.andresguard_gradle_plugin"
-deps.mogujie_tinker_plugin                = "com.mogujie.gradle:ThinRPlugin:$versions.mogujie_tinker_plugin"
-deps.dexcount_gradle_plugin               = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$versions.dexcount_gradle_plugin"
-deps.mcxiaoke_packer_ng                   = "com.mcxiaoke.gradle:packer-ng:$versions.mcxiaoke_packer_ng"
-deps.relinker                             = "com.getkeepsafe.relinker:relinker:$versions.relinker"
-deps.eventbus                             = "org.greenrobot:eventbus:$versions.eventbus"
-deps.umeng_common                         = "com.umeng.sdk:common:$versions.umeng_common"
-deps.umeng_analytics                      = "com.umeng.sdk:analytics:$versions.umeng_analytics"
-deps.leakcanary                           = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
-deps.leakcanary_no_op                     = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
-deps.bugly_crashreport_upgrade            = "com.tencent.bugly:crashreport_upgrade:$versions.bugly_crashreport_upgrade"
-deps.buglg_nativecrashreport              = "com.tencent.bugly:nativecrashreport:$versions.bugly_nativecrashreport"
-deps.mcxiaoke_packer_helper               = "com.mcxiaoke.gradle:packer-helper:$versions.mcxiaoke_packer_helper"
-deps.nineoldandroids                      = "com.nineoldandroids:library:$versions.nineoldandroids"
-deps.easypermissions                      = "com.yanzhenjie:permission:$versions.easypermissions"
-deps.airbnb_lottie                        = "com.airbnb.android:lottie:$versions.airbnb_lottie"
-deps.greendao                             = "org.greenrobot:greendao:$versions.greendao"
-deps.java_websocket                       = "org.java-websocket:Java-WebSocket:$versions.java_websocket"
-deps.squareup_javapoet                    = "com.squareup:javapoet:$versions.squareup_javapoet"
-deps.google_auto_service                  = "com.google.auto.service:auto-service:$versions.google_auto_service"
-deps.wechat_sdk_android_with_mta          = "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:$versions.wechat_sdk_android_with_mta"
-deps.filedownloader                       = "com.liulishuo.filedownloader:library:$versions.filedownloader"
-deps.filedownloader_okhttp                = "cn.dreamtobe.filedownloader:filedownloader-okhttp3-connection:$versions.filedownloader_okhttp"
-deps.aspectj                              = "org.aspectj:aspectjrt:$versions.aspectj"
-deps.lancet_plugin                        = "me.ele:lancet-plugin:$versions.lancet"
-deps.lancet                               = "me.ele:lancet-base:$versions.lancet"
-deps.blockcanary                          = "com.github.markzhai:blockcanary-android:$versions.blockcanary"
-deps.anrwatchdog                          = "com.github.anrwatchdog:anrwatchdog:$versions.anrwatchdog"
+    def espresso = [:]
+        espresso.idling_concurrent                = "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
+        espresso.idling_net                       = "androidx.test.espresso.idling:idling-net:$versions.espresso"
+        espresso.espresso_accessibility           = "androidx.test.espresso:espresso-accessibility:$versions.espresso"
+        espresso.espresso_contrib                 = "androidx.test.espresso:espresso-contrib:$versions.espresso"
+        espresso.espresso_core                    = "androidx.test.espresso:espresso-core:$versions.espresso"
+        espresso.espresso_idling_resource         = "androidx.test.espresso:espresso-idling-resource:$versions.espresso"
+        espresso.espresso_intents                 = "androidx.test.espresso:espresso-intents:$versions.espresso"
+        espresso.espresso_remote                  = "androidx.test.espresso:espresso-remote:$versions.espresso"
+        espresso.espresso_web                     = "androidx.test.espresso:espresso-web:$versions.espresso"
+    deps.espresso = espresso
+
+    def atsl = [:]
+        atsl.janktesthelper                       = "androidx.test.jank:janktesthelper:$versions.atsl_runner"
+        atsl.test_services                        = "androidx.test:test-services:$versions.atsl_runner"
+        atsl.uiautomator                          = "androidx.test.uiautomator:uiautomator:$versions.atsl_runner"
+        atsl.monitor                              = "androidx.test:monitor:rules:$versions.atsl_runner"
+        atsl.orchestrator                         = "androidx.test:orchestrator:$versions.atsl_runner"
+        atsl.rules                                = "androidx.test:rules:$versions.atsl_runner"
+        atsl.runner                               = "androidx.test:runner:$versions.atsl_runner"
+    deps.atsl = atsl
+
+    def mockito = [:]
+        mockito.core                              = "org.mockito:mockito-core:$versions.mockito"
+        mockito.all                               = "org.mockito:mockito-all:$versions.mockito_all"
+    deps.mockito = mockito
+
+    def rx = [:]
+        rx.rxjava2                                = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+        rx.rx_android                             = "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
+    deps.rx = rx
+
+    def retrofit = [:]
+        retrofit.retrofit                         = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+        retrofit.converter                        = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+        retrofit.rxjava                           = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+    deps.retrofit = retrofit
+
+    def dagger = [:]
+        dagger.runtime                            = "com.google.dagger:dagger:$versions.dagger"
+        dagger.compiler                           = "com.google.dagger:dagger-compiler:$versions.dagger"
+        dagger.plugin                             = "com.neenbedankt.gradle.plugins:android-apt:$versions.dagger_plugin"
+
+        dagger.android                            = "com.google.dagger:dagger-android:$versions.dagger"
+        dagger.androidsupport                     = "com.google.dagger:dagger-android-support:$versions.dagger"
+        dagger.androidprocessor                   = "com.google.dagger:dagger-android-processor:$versions.dagger"
+    deps.dagger = dagger
+
+    //Kotlin 标准库的依赖,标准库 kotlin-stdlib 面向 Java 6 及以上版本
+    //扩展版本的标准库，增加了对 JDK 7 与 JDK 8 中某些特性支持
+    def kotlin = [:]
+        kotlin.stdlib                             = "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
+        kotlin.jdk7                               = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+        kotlin.jkd8                               = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+        kotlin.test                               = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+        kotlin.plugin                             = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+    deps.kotlin = kotlin
+
+    deps.android_gradle_plugin                = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+    deps.logger                               = "com.orhanobut:logger:$versions.logger"
+
+    deps.fresco                               = "com.facebook.fresco:fresco:$versions.fresco"
+    deps.fresco_imagepipeline_okhttp3         = "com.facebook.fresco:imagepipeline-okhttp3:$versions.fresco"
+    deps.fresco_animatedgif                   = "com.facebook.fresco:animated-gif:$versions.fresco"
+    deps.dexmaker                             = "com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker"
+    deps.junit                                = "junit:junit:$versions.junit"
+    deps.androidjunitrunner                   = "androidx.test.runner.AndroidJUnitRunner"
+    deps.hamcrest                             = "org.hamcrest:hamcrest-all:$versions.hamcrest"
+    deps.gson                                 = "com.google.code.gson:gson:$versions.gson"
+
+    //butterknife
+    deps.butterknife                          = "com.jakewharton:butterknife:$versions.butterknife"
+    deps.butterknife_plugin                   = "com.jakewharton:butterknife-gradle-plugin:$versions.butterknife"
+    deps.butterknife_compiler                 = "com.jakewharton:butterknife-compiler:$versions.butterknife"
+
+    deps.okhttp3                              = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
+    deps.okhttp3_logging_interceptor          = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3_logging_interceptor"
+    deps.mock_web_server                      = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
+    deps.okio                                 = "com.squareup.okio:okio:$versions.okio"
+    deps.fastjson                             = "com.alibaba:fastjson:$versions.fastjson"
+    deps.tinker_plugin                        = "com.tencent.tinker:tinker-patch-gradle-plugin:$versions.tinker_plugin"
+    deps.bugly_tinker_support                 = "com.tencent.bugly:tinker-support:$versions.bugly_tinker_support"
+    deps.tinker_android_lib                   = "com.tencent.tinker:tinker-android-lib:$versions.tinker_android_lib"
+    deps.andresguard_gradle_plugin            = "com.tencent.mm:AndResGuard-gradle-plugin:$versions.andresguard_gradle_plugin"
+    deps.mogujie_tinker_plugin                = "com.mogujie.gradle:ThinRPlugin:$versions.mogujie_tinker_plugin"
+    deps.dexcount_gradle_plugin               = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$versions.dexcount_gradle_plugin"
+    deps.mcxiaoke_packer_ng                   = "com.mcxiaoke.gradle:packer-ng:$versions.mcxiaoke_packer_ng"
+    deps.relinker                             = "com.getkeepsafe.relinker:relinker:$versions.relinker"
+    deps.eventbus                             = "org.greenrobot:eventbus:$versions.eventbus"
+    deps.umeng_common                         = "com.umeng.sdk:common:$versions.umeng_common"
+    deps.umeng_analytics                      = "com.umeng.sdk:analytics:$versions.umeng_analytics"
+    deps.leakcanary                           = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+    deps.leakcanary_no_op                     = "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+    deps.bugly_crashreport_upgrade            = "com.tencent.bugly:crashreport_upgrade:$versions.bugly_crashreport_upgrade"
+    deps.buglg_nativecrashreport              = "com.tencent.bugly:nativecrashreport:$versions.bugly_nativecrashreport"
+    deps.mcxiaoke_packer_helper               = "com.mcxiaoke.gradle:packer-helper:$versions.mcxiaoke_packer_helper"
+    deps.nineoldandroids                      = "com.nineoldandroids:library:$versions.nineoldandroids"
+    deps.easypermissions                      = "com.yanzhenjie:permission:$versions.easypermissions"
+    deps.airbnb_lottie                        = "com.airbnb.android:lottie:$versions.airbnb_lottie"
+    deps.greendao                             = "org.greenrobot:greendao:$versions.greendao"
+    deps.java_websocket                       = "org.java-websocket:Java-WebSocket:$versions.java_websocket"
+    deps.squareup_javapoet                    = "com.squareup:javapoet:$versions.squareup_javapoet"
+    deps.google_auto_service                  = "com.google.auto.service:auto-service:$versions.google_auto_service"
+    deps.wechat_sdk_android_with_mta          = "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:$versions.wechat_sdk_android_with_mta"
+    deps.filedownloader                       = "com.liulishuo.filedownloader:library:$versions.filedownloader"
+    deps.filedownloader_okhttp                = "cn.dreamtobe.filedownloader:filedownloader-okhttp3-connection:$versions.filedownloader_okhttp"
+    deps.aspectj                              = "org.aspectj:aspectjrt:$versions.aspectj"
+    deps.lancet_plugin                        = "me.ele:lancet-plugin:$versions.lancet"
+    deps.lancet                               = "me.ele:lancet-base:$versions.lancet"
+    deps.blockcanary                          = "com.github.markzhai:blockcanary-android:$versions.blockcanary"
+    deps.anrwatchdog                          = "com.github.anrwatchdog:anrwatchdog:$versions.anrwatchdog"
 ext.deps = deps
 
 def addRepos(RepositoryHandler handler) {
